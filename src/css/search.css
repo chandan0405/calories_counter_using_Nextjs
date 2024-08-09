@@ -1,0 +1,84 @@
+.search_container {
+    display: flex;
+    border: 1px solid black;
+    border-radius: 12px;
+    max-width: 370px;
+    margin: auto;
+    background-color: #fff;
+
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+}
+
+.input_box {
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+    border: none;
+    padding: 4px 0px 6px 6px;
+    font-weight: 600;
+    position: relative;
+}
+
+.input_box:focus {
+    outline: none;
+}
+
+.save-btn {
+    position: absolute;
+    bottom: 0;
+    background-color: #1e90ff;
+    color: white;
+    height: 40px;
+    width: 370px;
+    left: 0;
+    margin-bottom: 30px;
+    border-radius: 12px;
+}
+
+.clear-button {
+    border: none;
+    background-color: transparent;
+    margin-right: 10px;
+}
+
+.results-list {
+    max-height: 350px;
+    min-width: 380px;
+    border-radius: 12px;
+    overflow-y: scroll;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.results-list li {
+    list-style: none;
+    text-align: left;
+    padding: 7px 5px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+.foodcard__container {
+    max-height: 464px;
+    overflow-y: scroll;
+    margin-top: 10px;
+}
+
+.results-list li:hover {
+    background-color: #e3e4e6;
+    border-radius: 12px;
+}
+.loading-Item{
+    text-align: center;
+    font-size: 20px;
+}

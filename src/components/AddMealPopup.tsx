@@ -1,0 +1,68 @@
+"use client";
+import React, { useState } from 'react';
+import {  useSelector } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Modal, Button, Form } from 'react-bootstrap';
+import "../css/addPopup.css";
+
+
+const AddMealPopup = ({ closePopup, show, referFood }) => {
+    const [mealType, setMealType] = useState('');
+    const { selectedDate } = useSelector((state) => state.food);
+    const tempMealItems = useSelector((state) => state.tempMeal.tempMealData);
+
+    const handleAddMeal = () => {
+        if (mealType.trim().toLowerCase()) {
+            const currentDate = selectedDate.toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            let currentMeals = JSON.parse(localStorage.getItem(currentDate)) || {};
+
+            if (!currentMeals[mealType.trim().toLowerCase()]) {
+                currentMeals[mealType.trim().toLowerCase()] = [];
+            }
+
+            // Append items to the meal type array
+            tempMealItems.forEach((item) => {
+                currentMeals[mealType.trim().toLowerCase()].push(item);
+            });
+
+            // Save the updated meals to localStorage
+            localStorage.setItem(currentDate, JSON.stringify(currentMeals));
+
+            referFood();
+            closePopup();
+        }
+    };
+
+    return (
+        <div className='modal-body-container'>
+            <Modal show={show} onHide={closePopup} centered className='modal_container'>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add New Meal Type</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="mealType">
+                            <Form.Label>Meal Type</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={mealType}
+                                onChange={(e) => setMealType(e.target.value)}
+                                placeholder="Enter meal type Like (Snacks,mid morning.etc)"
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={closePopup}>
+                        Cancel
+                    </Button>
+                    <Button variant="primary" onClick={handleAddMeal}>
+                        Add
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+    );
+};
+
+export default AddMealPopup;

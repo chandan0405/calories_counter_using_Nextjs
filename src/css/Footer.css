@@ -1,0 +1,68 @@
+/* Footer.css */
+.footer {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  background-color: #fff;
+  padding: 10px 0;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  max-height: 844px;
+  max-width: 380px;
+  align-items: center;
+  
+}
+
+.footer-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.footer-button.active svg{
+  background-color: #e0e0e0;
+    color: #007bff;
+    height: 21px;
+    min-width: 60px;
+    border-radius: 12px;
+}
+
+.btn-container {
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 36px;
+  border: 1px solid #717dfa;
+  height: 80px;
+  width: 80px;
+  border-radius: 20px;
+  background-color: #717dfa;
+  cursor: pointer;
+}
+
+
+.btn-container .add-button {
+  color: #fff;
+  border-radius: 8px;
+  margin: auto;
+  margin-top: 33.33%;
+  border: none;
+  outline: none;
+  background-color: #717dfa;
+}
+.btn-container:active {
+  transform: scale(1.04); 
+}
+
+.add-icon {
+  width: 30px;
+  height: 30px;
+}
+.footer-button:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}

@@ -1,0 +1,88 @@
+/* FoodCard.css */
+.food-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 100%;
+    max-width: 350px;
+    margin: auto;
+    margin-top: 20px;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .food-card-header {
+    display: flex;
+    min-height: 60px;
+  }
+  
+  .food-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .falme-icon{
+    height: 12px;
+    width: 12px;
+    margin-right: 5px;
+  }
+  .food-info {
+    margin-left: 10px;
+    align-items: flex-start;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .food-info h4 {
+    margin: 0;
+    font-size:20px;
+    font-weight: 700;
+  }
+  
+  .food-info p {
+    margin: 0;
+    color: #757575;
+  }
+  
+  .delete-button {
+    background: none;
+    border: none;
+    color: #ff4081;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 50px;
+    margin-right: 20px;
+  }
+  
+  .food-card-nutrition {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .nutrition-item {
+    display: flex;
+    align-items: center;
+    /* width: 60px; */
+  }
+  
+  .nutrition-name{
+    font-size: 14px;
+    position: absolute;
+    margin-left: 20px;
+    margin-top: 40px;
+  }
+  
+ 

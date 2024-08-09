@@ -1,0 +1,108 @@
+/* DatePickerComponent.css */
+.date-picker-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    position: relative;
+  }
+  
+  .date-picker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .month-dropdown {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    max-width: 80px;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+  }
+  .date-picker-header select{
+    text-indent: 1px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+
+  }
+  select::-ms-expand{
+    display: none;
+    margin-right: 4px;
+  }
+  select:focus{
+    outline: none;
+  }
+
+  
+  .calendar-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  .week-container{
+    display: flex;
+    width: 100%;
+    margin-top: 30px;
+    gap: 12px;
+   
+  }
+  
+  .week-day {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    margin: 2px;
+    cursor: pointer;
+  }
+  
+  .week-day-name {
+    font-size: 16px;
+  }
+  
+  .week-day-date {
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .week-day.selected{
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    border-radius: 24px;
+    height: 64px;
+  }
+  .week-day.selected .week-day-date {
+    color: #007bff;
+    font-weight: 700;
+  }
+  .week-day.selected .week-day-name {
+    color: #007bff;
+  }
+
+  
+  .react-datepicker {
+    position: absolute;
+    top: 60px;
+    z-index: 1000;
+  }
+  
