@@ -1,12 +1,14 @@
-
-.modal_container{
-    display: inline-block;
-    flex-direction: column;
+/* .modal_container {
+    max-width: 330px;
+    position: absolute;
+    display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 330px;
+} */
+
+.modal-body-container {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%);
 }

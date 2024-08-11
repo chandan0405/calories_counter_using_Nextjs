@@ -1,67 +1,75 @@
-
 "use client";
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import HomeContainer from './HomeContainer';
 import Footer from './Footer';
 import AddMealPopup from './AddMealPopup';
+import { RootState } from '../redux/store';
+import "../css/main.css";
 
-const MainContainerComponent = () => {
-    const [meals, setMeals] = useState([]);
-    const { selectedDate } = useSelector((state) => state.food);
-    const defaultMeals = useSelector((state) => state.meals);
-    const [showAddMealPopup, setShowAddMealPopup] = useState(false);
+interface Meal {
+  mealType: string;
+  items: Array<{ name: string; calories: number }>;
+  totalCalories: number;
+}
 
-    const fetchMeals = (date) => {
-        const currentDate = date.toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        const storedMeals = JSON.parse(localStorage.getItem(currentDate));
+const MainContainerComponent: React.FC = () => {
+  const [meals, setMeals] = useState<Meal[]>([]);
+  const { selectedDate } = useSelector((state: RootState) => state.food);
+  const defaultMeals = useSelector((state: RootState) => state.meals);
+  const [showAddMealPopup, setShowAddMealPopup] = useState<boolean>(false);
 
-        if (storedMeals) {
-            const meals = Object.keys(storedMeals).map((mealType) => ({
-                mealType: mealType.charAt(0).toUpperCase() + mealType.slice(1),
-                items: storedMeals[mealType],
-                totalCalories: storedMeals[mealType].reduce((acc, item) => acc + (item.calories || 0), 0),
-            }));
-            return meals;
-        }
+  const fetchMeals = (date: Date): Meal[] => {
+    const currentDate = date.toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+    const storedMeals = localStorage.getItem(currentDate);
 
-        return defaultMeals;
-    };
+    if (storedMeals) {
+      const parsedMeals = JSON.parse(storedMeals);
+      const meals = Object.keys(parsedMeals).map((mealType) => ({
+        mealType: mealType.charAt(0).toUpperCase() + mealType.slice(1),
+        items: parsedMeals[mealType],
+        totalCalories: parsedMeals[mealType].reduce(
+          (acc: number, item: { calories: number }) => acc + (item.calories || 0),
+          0
+        ),
+      }));
+      return meals;
+    }
 
-    useEffect(() => {
-        const meals = fetchMeals(selectedDate);
-        setMeals(meals);
-    }, [selectedDate, defaultMeals]);
+    return defaultMeals;
+  };
 
-    const handleShowPopup = () => {
-        setShowAddMealPopup(true);
-    };
+  useEffect(() => {
+    const meals = fetchMeals(selectedDate);
+    setMeals(meals);
+  }, [selectedDate, defaultMeals]);
 
-    const closePopup = () => {
-        setShowAddMealPopup(false);
-    };
+  const handleShowPopup = () => {
+    setShowAddMealPopup(true);
+  };
 
-    const referFood = () => {
+  const closePopup = () => {
+    setShowAddMealPopup(false);
+  };
 
-        const meals = fetchMeals(selectedDate);
-        setMeals(meals);
-    };
+  const referFood = () => {
+    const meals = fetchMeals(selectedDate);
+    setMeals(meals);
+  };
 
-    return (
-        <>
-            <HomeContainer meals={meals} />
-            <Footer handleShowPopup={handleShowPopup} />
-            {
-                showAddMealPopup &&
-                (<AddMealPopup
-                    show={handleShowPopup}
-                    closePopup={closePopup}
-                    referFood={referFood}
-                />
-                )
-            }
-        </>
-    );
+  return (
+    <div className='header_footer_container'>
+      <HomeContainer meals={meals} />
+      <Footer handleShowPopup={handleShowPopup} />
+      {showAddMealPopup && (
+        <AddMealPopup show={handleShowPopup} closePopup={closePopup} referFood={referFood} />
+      )}
+    </div>
+  );
 };
 
 export default MainContainerComponent;

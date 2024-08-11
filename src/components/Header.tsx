@@ -1,14 +1,13 @@
-"use client";
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import "../css/header.css";
 import { IoIosNotifications } from "react-icons/io";
 import DatePickerComp from './DatePickerComp';
 import { useSelector } from 'react-redux';
 
-const Header = () => {
-  const selectedDate = useSelector((state) => state.food.selectedDate);
+const Header: React.FC = () => {
+  const selectedDate = useSelector((state: any) => state.food.selectedDate);
   const [showDatePicker, setShowDatePicker] = useState(false);
- 
+
   const getFormattedDate = () => {
     const today = new Date();
     if (
@@ -27,7 +26,6 @@ const Header = () => {
   };
 
   const formattedDate = getFormattedDate();
-  
 
   return (
     <>
@@ -44,9 +42,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      {showDatePicker && (
-        <DatePickerComp />
-      )}
+      {showDatePicker && <DatePickerComp />}
     </>
   );
 }

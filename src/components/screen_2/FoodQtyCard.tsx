@@ -6,9 +6,23 @@ import "../../css/foodQty.css";
 import { useDispatch } from 'react-redux';
 import { addFoodItem, updateFoodItem } from '../../redux/slice/tempMealSlice';
 
-const FoodQtyCard = ({ show, onClose, initialNutritionalValues, clearSearch, id }) => {
+interface FoodQtyCardProps {
+  show: boolean;
+  onClose: () => void;
+  initialNutritionalValues: {
+    calories: number;
+    protein: number;
+    carbs: number;
+    weight: number;
+    quantity?: number;
+  };
+  clearSearch: () => void;
+  id?: string; // Optional in case it's not provided
+}
+
+const FoodQtyCard: React.FC<FoodQtyCardProps> = ({ show, onClose, initialNutritionalValues, clearSearch, id }) => {
   const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState<number>(1);
 
   useEffect(() => {
     if (initialNutritionalValues.quantity) {
@@ -38,11 +52,11 @@ const FoodQtyCard = ({ show, onClose, initialNutritionalValues, clearSearch, id 
     }
     clearSearch();
     onClose();
-  };
+  }; 
 
   return (
-    <Modal show={show} onHide={onClose} className='modal_container'>
-      <Modal.Body className='modal-body'>
+    <Modal show={show} onHide={onClose} className="modal_container">
+      <Modal.Body className="modal-body">
         <Container>
           <Row className="mb-3">
             <Col>

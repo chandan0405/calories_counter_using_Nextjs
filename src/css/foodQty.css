@@ -1,12 +1,6 @@
-
-.modal_container{
-    display: inline-block;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 370px;
+.modal_container {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); 
+    max-width: 370px;
+    margin: 0 auto;
 }
+

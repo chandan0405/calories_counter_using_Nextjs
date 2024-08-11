@@ -8,3 +8,7 @@
     max-height: 300px;
     overflow-y: scroll;
   }
+
+  .header_footer_container{
+    position: relative;
+  }

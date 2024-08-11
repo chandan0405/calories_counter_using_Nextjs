@@ -1,8 +1,8 @@
-"use client";
+"use client"
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { IoSearch } from "react-icons/io5";
 import "../../css/search.css";
-import { useParams } from 'react-router-dom';
+import { usePathname } from 'next/navigation'
 import axios from 'axios';
 import DatePickerComp from "../DatePickerComp";
 import MealToggle from "./MealToggle";
@@ -12,12 +12,12 @@ import FoodCard from './FoodCard';
 import FoodQtyCard from './FoodQtyCard';
 import { addFoodItem, resetTempMeals } from '../../redux/slice/tempMealSlice';
 import { setSelectedDate } from '../../redux/slice/foodSlice';
+import { useRouter } from 'next/navigation'
 
 const SearchFood = () => {
   const [showClear, setShowClear] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
-  // const navigate = useNavigate();
   const [isFocussed, setIsFocussed] = useState(true);
   const meals = useSelector((state) => state.meals);
   const dispatch = useDispatch();
@@ -25,13 +25,19 @@ const SearchFood = () => {
   const [showQtyCard, setShowQtyCard] = useState(false);
   const [loading, setLoading] = useState(false);
   const tempMealItems = useSelector((state) => state.tempMeal.tempMealData);
-  const { selectedFoods, selectedDate } = useSelector((state) => state.food)
-  const { date } = useParams();
+  const { selectedFoods, selectedDate } = useSelector((state) => state.food);
+  const pathname = usePathname();
+  const date = pathname.split('/').pop();
+  const router = useRouter()
 
   useEffect(() => {
-    const parsedDate = new Date(date);
-    if (!isNaN(parsedDate)) {
-      dispatch(setSelectedDate(parsedDate));
+    if (date) {
+      const parsedDate = new Date(date);
+      if (!isNaN(parsedDate)) {
+        dispatch(setSelectedDate(parsedDate));
+      } else {
+        console.error('Invalid date format');
+      }
     }
   }, [date, dispatch]);
 
@@ -77,7 +83,6 @@ const SearchFood = () => {
       setShowQtyCard(true);
     } catch (error) {
       console.error('Error fetching nutrition data:', error);
-    } finally {
     }
   };
 
@@ -97,22 +102,17 @@ const SearchFood = () => {
     const currentDate = selectedDate.toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' });
     let currentMeals = JSON.parse(localStorage.getItem(currentDate)) || {};
 
-    // Convert the selected meal type to lowercase
     const selectedMealType = selectedFoods.toLowerCase();
     if (!currentMeals[selectedMealType]) {
       currentMeals[selectedMealType] = [];
     }
 
-    // Append items to the meal type array
     tempMealItems?.forEach((item) => {
       currentMeals[selectedMealType].push(item);
     });
 
-    // Save the updated meals to localStorage
     localStorage.setItem(currentDate, JSON.stringify(currentMeals));
-
-    // Navigate and reset temporary meals
-    // navigate('/');
+    router.push('/');
     dispatch(resetTempMeals());
   };
 
@@ -148,7 +148,7 @@ const SearchFood = () => {
   };
 
   return (
-    <>
+    <div className='search_food_container'>
       <DatePickerComp />
       <MealToggle />
       <div className='search_container'>
@@ -184,7 +184,9 @@ const SearchFood = () => {
           />
         ))}
       </div>
-      <button onClick={handleSave} className='save-btn'>Done</button>
+      <div className='save_btn_container'>
+        <button onClick={handleSave} className='save-btn'>Done</button>
+      </div>
       <div className='foodqty_modal_container'>
         {nutrition && (
           <FoodQtyCard
@@ -199,15 +201,15 @@ const SearchFood = () => {
               image: (nutrition.photo?.thumb || nutrition.image),
               name: (nutrition.food_name || nutrition.name),
               quantity: (nutrition.quantity),
-              id: (nutrition.id) // Include the ID
+              id: (nutrition.id)
             }}
             onSave={saveToTempMeal}
             clearSearch={clearSearch}
-            id={nutrition.id} // Pass the ID to FoodQtyCard
+            id={nutrition.id}
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

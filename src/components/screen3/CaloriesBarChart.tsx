@@ -1,28 +1,41 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import "../../css/barChart.css";
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { RootState } from '../../redux/store';
 
+interface Meal {
+  calories: number;
+}
 
-const CaloriesBarChart = () => {
-  const { selectedDate } = useSelector((state) => state.food);
-  // const navigate = useNavigate();
+interface CalorieData {
+  date: string;
+  calories: number;
+}
+
+const CaloriesBarChart: React.FC = () => {
+  const router = useRouter();
+  const { selectedDate } = useSelector((state: RootState) => state.food);
 
   // Function to calculate total calories for a specific date
-  const calculateTotalCaloriesForDate = (formattedDate) => {
+  const calculateTotalCaloriesForDate = (formattedDate: string): number => {
     let totalCalories = 0;
-    const dailyCalorieData = JSON.parse(localStorage.getItem(formattedDate));
+    const dailyCalorieData = localStorage.getItem(formattedDate);
     if (dailyCalorieData) {
-      Object.values(dailyCalorieData).forEach((mealArray) => {
+      const parsedData: Record<string, Meal[]> = JSON.parse(dailyCalorieData);
+      Object.values(parsedData).forEach((mealArray: Meal[]) => {
         totalCalories += mealArray.reduce((total, meal) => total + meal.calories, 0);
       });
     }
 
     return totalCalories;
   };
-  const generateCalorieDataForLast7Days = () => {
-    let calorieDataArray = [];
+
+  // Generate calorie data for the last 7 days
+  const generateCalorieDataForLast7Days = (): CalorieData[] => {
+    const calorieDataArray: CalorieData[] = [];
     const currentDate = new Date();
 
     for (let dayOffset = 6; dayOffset >= 0; dayOffset--) {
@@ -30,8 +43,15 @@ const CaloriesBarChart = () => {
       date.setDate(currentDate.getDate() - dayOffset);
 
       // Format date for localStorage and display
-      const formattedDate = date.toLocaleDateString("en-US", { day: '2-digit', month: '2-digit', year: 'numeric' });
-      const displayDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const formattedDate = date.toLocaleDateString("en-US", {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      });
+      const displayDate = date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+      });
 
       // Calculate total calories for the day
       const totalCaloriesForDay = calculateTotalCaloriesForDate(formattedDate);
@@ -39,7 +59,7 @@ const CaloriesBarChart = () => {
       // Push data into the array
       calorieDataArray.push({
         date: displayDate,
-        calories: totalCaloriesForDay
+        calories: totalCaloriesForDay,
       });
     }
 
@@ -54,7 +74,7 @@ const CaloriesBarChart = () => {
   }, [selectedDate]);
 
   const navigateToHome = () => {
-    // navigate('/');
+    router.push('/');
   };
 
   return (
@@ -79,8 +99,11 @@ const CaloriesBarChart = () => {
           <Legend />
           <Bar dataKey="calories" fill="#8884d8" />
         </BarChart>
+      <div className='save_btn_container'>
+        <button className="save-btn" onClick={navigateToHome}>Go to Home</button>
       </div>
-      <button className='save-btn' onClick={navigateToHome}>Go to Home</button>
+      </div>
+
     </>
   );
 };

@@ -4,22 +4,25 @@ import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-pro
 import 'react-circular-progressbar/dist/styles.css';
 import "../css/calorie.css";
 
-const CalorieChart = ({ meals }) => {
-  const totalcalories=2500;  //Taken fixed value;
-  const totalfat= Math.floor((totalcalories*0.3)/9);
-  const totalcarbs= Math.floor((totalcalories*0.45)/4);
-  const totalprotein= Math.floor((totalcalories*0.25)/4);
+interface MealProps {
+  meals: Array<{ totalCalories: number }>;
+}
 
-  const totalBurntCalories = meals?.reduce((acc, meal) => acc + meal.totalCalories,
-    0)||0;
-  const totalconsumedFat=Math.floor((totalBurntCalories*0.3)/9) ||0;
-  const totalconsumedProtein=Math.floor((totalBurntCalories*0.25)/4)||0;
-  const totalconsumedCarbs=Math.floor((totalBurntCalories*0.45)/4)||0;
+const CalorieChart: React.FC<MealProps> = ({ meals }) => {
+  const totalcalories = 2500;
+  const totalfat = Math.floor((totalcalories * 0.3) / 9);
+  const totalcarbs = Math.floor((totalcalories * 0.45) / 4);
+  const totalprotein = Math.floor((totalcalories * 0.25) / 4);
 
-  const percentageProgressvalue= Math.floor((totalBurntCalories/totalcalories)*100)||0
-  const percentageProgressvalueOfProtein= Math.floor((totalconsumedProtein/totalprotein)*100)||0
-  const percentageProgressvalueofCarbs= Math.floor((totalconsumedCarbs/totalcarbs)*100)||0;
-  const percentageProgressvalueofFat= Math.floor((totalconsumedFat/totalfat)*100)||0;
+  const totalBurntCalories = meals?.reduce((acc, meal) => acc + meal.totalCalories, 0) || 0;
+  const totalconsumedFat = Math.floor((totalBurntCalories * 0.3) / 9) || 0;
+  const totalconsumedProtein = Math.floor((totalBurntCalories * 0.25) / 4) || 0;
+  const totalconsumedCarbs = Math.floor((totalBurntCalories * 0.45) / 4) || 0;
+
+  const percentageProgressvalue = Math.floor((totalBurntCalories / totalcalories) * 100) || 0;
+  const percentageProgressvalueOfProtein = Math.floor((totalconsumedProtein / totalprotein) * 100) || 0;
+  const percentageProgressvalueofCarbs = Math.floor((totalconsumedCarbs / totalcarbs) * 100) || 0;
+  const percentageProgressvalueofFat = Math.floor((totalconsumedFat / totalfat) * 100) || 0;
 
   return (
     <div className="calorie-chart">
@@ -44,8 +47,8 @@ const CalorieChart = ({ meals }) => {
             </div>
           </CircularProgressbarWithChildren>
           <div className='calorie_burnt'>
-            <span className='total_calorie'> {totalBurntCalories}/{totalcalories} Kcal</span>
-            <p className='total_eaten'> Eaten/Target</p>
+            <span className='total_calorie'>{totalBurntCalories}/{totalcalories} Kcal</span>
+            <p className='total_eaten'>Eaten/Target</p>
           </div>
         </div>
         <div className="progress-bars">
