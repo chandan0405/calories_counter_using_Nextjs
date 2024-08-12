@@ -55,7 +55,7 @@ const DatePickerComp: React.FC = () => {
       {isOpen && (
         <DatePicker
           selected={selectedDate}
-          onChange={handleDateChange}
+          onChange={()=>handleDateChange(selectedDate)}
           inline
         />
       )}
