@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import "../css/header.css";
 import { IoIosNotifications } from "react-icons/io";
 import DatePickerComp from './DatePickerComp';
-import { useSelector } from 'react-redux';
+import { useFoodStore } from '@/store/useFoodStore';
 
 const Header: React.FC = () => {
-  const selectedDate = useSelector((state: any) => state.food.selectedDate);
+  const selectedDate = useFoodStore((state)=>state.selectedDate)
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const getFormattedDate = () => {

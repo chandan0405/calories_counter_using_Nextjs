@@ -1,10 +1,8 @@
 "use client";
 import React from 'react';
 import '../css/MealCard.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedFoods } from '../redux/slice/foodSlice';
 import { useRouter } from 'next/navigation';
-import { RootState } from '../redux/store';
+import { useFoodStore } from '@/store/useFoodStore';
 
 interface MealCardProps {
   mealType: string;
@@ -14,11 +12,11 @@ interface MealCardProps {
 
 const MealCard: React.FC<MealCardProps> = ({ mealType, totalCalories, items }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const selectedDate = useSelector((state: RootState) => state.food.selectedDate);
+  const selectedDate = useFoodStore((state)=>state.selectedDate);
+  const setSelectedFoods= useFoodStore((state)=>state.setSelectedFoods)
 
   const handleCardClick = () => {
-    dispatch(setSelectedFoods(mealType));
+    setSelectedFoods(mealType)
     const formattedDate = selectedDate.toLocaleDateString('en-CA');
     router.push(`/search/${formattedDate}`);
   };

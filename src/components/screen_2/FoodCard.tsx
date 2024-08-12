@@ -2,10 +2,9 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import "../../css/foodCard.css";
-import flameIcon from "@/assets/flame-icon.svg"
-import { removeFoodItem } from '../../redux/slice/tempMealSlice';
-import { useDispatch } from 'react-redux';
+import flameIcon from "@/assets/flame-icon.svg";
 import Image from 'next/image';
+import { useMealStore } from '@/store/useMealstore';
 
 interface FoodCardProps {
   image: string;
@@ -37,7 +36,7 @@ const FoodCard: React.FC<FoodCardProps> = ({
   quantity,
   onEdit,
 }) => {
-  const dispatch = useDispatch();
+  const removeFoodItem= useMealStore((state)=>state.removeFoodItem);
 
   const ProgressWithLabel: React.FC<ProgressWithLabelProps> = ({ value, color }) => (
     <Box display="flex" width="100%" flexDirection="row" gap="10px" alignItems="flex-start">
@@ -68,7 +67,7 @@ const FoodCard: React.FC<FoodCardProps> = ({
 
   const deleteFoodItem = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    dispatch(removeFoodItem(id));
+    removeFoodItem(id)
   };
 
   return (

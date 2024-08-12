@@ -4,12 +4,14 @@ import {  useSelector } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button, Form } from 'react-bootstrap';
 import "../css/addPopup.css";
+import { useFoodStore } from '@/store/useFoodStore';
+import { useMealStore } from '@/store/useMealstore';
 
 
 const AddMealPopup = ({ closePopup, show, referFood }) => {
     const [mealType, setMealType] = useState('');
-    const { selectedDate } = useSelector((state) => state.food);
-    const tempMealItems = useSelector((state) => state.tempMeal.tempMealData);
+    const  selectedDate  = useFoodStore((state)=>state.selectedDate);
+    const tempMealItems = useMealStore((state)=>state.mealData);
 
     const handleAddMeal = () => {
         if (mealType.trim().toLowerCase()) {

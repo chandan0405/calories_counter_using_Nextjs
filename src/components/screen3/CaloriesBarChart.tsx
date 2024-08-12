@@ -2,9 +2,8 @@
 import React, { useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import "../../css/barChart.css";
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import { RootState } from '../../redux/store';
+import { useFoodStore } from '@/store/useFoodStore';
 
 interface Meal {
   calories: number;
@@ -17,7 +16,7 @@ interface CalorieData {
 
 const CaloriesBarChart: React.FC = () => {
   const router = useRouter();
-  const { selectedDate } = useSelector((state: RootState) => state.food);
+  const  selectedDate  = useFoodStore((state)=>state.selectedDate)
 
   // Function to calculate total calories for a specific date
   const calculateTotalCaloriesForDate = (formattedDate: string): number => {

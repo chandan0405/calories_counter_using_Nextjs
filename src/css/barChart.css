@@ -20,19 +20,18 @@
 }
 
 .save_btn_container {
-  position: absolute;
-  bottom: 0;
-  /* display: flex;
-  justify-content: center; */
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
 .save-btn {
+  position: absolute;
   background-color: #1e90ff;
   color: white;
+  border-radius: 12px;
   height: 40px;
   width: 370px;
+  bottom: 0;
   margin-bottom: 20px;
-  border-radius: 12px;
 
 }

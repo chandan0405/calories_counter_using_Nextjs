@@ -7,25 +7,28 @@ import axios from 'axios';
 import DatePickerComp from "../DatePickerComp";
 import MealToggle from "./MealToggle";
 import { debounce } from 'lodash';
-import { useSelector, useDispatch } from 'react-redux';
 import FoodCard from './FoodCard';
 import FoodQtyCard from './FoodQtyCard';
-import { addFoodItem, resetTempMeals } from '../../redux/slice/tempMealSlice';
-import { setSelectedDate } from '../../redux/slice/foodSlice';
 import { useRouter } from 'next/navigation'
+import { useMealStore } from '@/store/useMealstore';
+import { useFoodStore } from '@/store/useFoodStore';
+import { useTempMealStore } from '@/store/useTempMealStore';
 
 const SearchFood = () => {
   const [showClear, setShowClear] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [isFocussed, setIsFocussed] = useState(true);
-  const meals = useSelector((state) => state.meals);
-  const dispatch = useDispatch();
   const [nutrition, setNutrition] = useState(null);
   const [showQtyCard, setShowQtyCard] = useState(false);
   const [loading, setLoading] = useState(false);
-  const tempMealItems = useSelector((state) => state.tempMeal.tempMealData);
-  const { selectedFoods, selectedDate } = useSelector((state) => state.food);
+  const meals = useTempMealStore((state) => state.meals);
+  const tempMealItems = useMealStore((state) => state.mealData);
+  const selectedFoods = useFoodStore((state) => state.selectedFoods);
+  const selectedDate = useFoodStore((state) => state.selectedDate)
+  const addFoodItem = useMealStore((state) => state.addFoodItem)
+  const resetTempMeals = useMealStore((state) => state.resetTempMeals);
+  const setSelectedDate = useFoodStore((state) => state.setSelectedDate);
   const pathname = usePathname();
   const date = pathname.split('/').pop();
   const router = useRouter()
@@ -34,12 +37,12 @@ const SearchFood = () => {
     if (date) {
       const parsedDate = new Date(date);
       if (!isNaN(parsedDate)) {
-        dispatch(setSelectedDate(parsedDate));
+        setSelectedDate(parsedDate)
       } else {
         console.error('Invalid date format');
       }
     }
-  }, [date, dispatch]);
+  }, [date]);
 
   const fetchResults = useCallback(
     debounce(async (query) => {
@@ -113,7 +116,7 @@ const SearchFood = () => {
 
     localStorage.setItem(currentDate, JSON.stringify(currentMeals));
     router.push('/');
-    dispatch(resetTempMeals());
+    resetTempMeals()
   };
 
   const clearSearch = () => {
@@ -132,7 +135,7 @@ const SearchFood = () => {
   ), [results]);
 
   const saveToTempMeal = (foodData) => {
-    dispatch(addFoodItem(foodData));
+    addFoodItem(foodData)
     setShowQtyCard(false);
   };
 

@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import HomeContainer from './HomeContainer';
 import Footer from './Footer';
 import AddMealPopup from './AddMealPopup';
-import { RootState } from '../redux/store';
 import "../css/main.css";
+import { useFoodStore } from '@/store/useFoodStore';
+import { useTempMealStore } from '@/store/useTempMealStore';
 
 interface Meal {
   mealType: string;
@@ -15,8 +15,8 @@ interface Meal {
 
 const MainContainerComponent: React.FC = () => {
   const [meals, setMeals] = useState<Meal[]>([]);
-  const { selectedDate } = useSelector((state: RootState) => state.food);
-  const defaultMeals = useSelector((state: RootState) => state.meals);
+  const  selectedDate  = useFoodStore((state) => state.selectedDate);
+  const defaultMeals = useTempMealStore((state)=>state.meals);
   const [showAddMealPopup, setShowAddMealPopup] = useState<boolean>(false);
 
   const fetchMeals = (date: Date): Meal[] => {

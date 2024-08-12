@@ -4,20 +4,19 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FaCalendarAlt } from 'react-icons/fa';
 import '../css/datepicker.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedDate } from '../redux/slice/foodSlice';
-import { useRouter,usePathname, useParams } from 'next/navigation';
+import { useRouter, usePathname, useParams } from 'next/navigation';
+import { useFoodStore } from '@/store/useFoodStore';
 
 const DatePickerComp = () => {
-  const selectedDate = useSelector((state:any) => state.food.selectedDate);
-  const dispatch = useDispatch();
+  const selectedDate = useFoodStore((state) => state.selectedDate);
+  const setSelectedDate = useFoodStore((state) => state.setSelectedDate)
   const [isOpen, setIsOpen] = useState(false);
   const [month, setMonth] = useState(selectedDate.toLocaleString('default', { month: 'long' }));
-  const router= useRouter();
+  const router = useRouter();
   const location = usePathname();
 
-  const handleDateChange = (date:Date) => {
-    dispatch(setSelectedDate(date));
+  const handleDateChange = (date: Date) => {
+    setSelectedDate(date)
     setMonth(date.toLocaleString('default', { month: 'long' }));
     setIsOpen(false);
     // Update the URL only if we are in the search route

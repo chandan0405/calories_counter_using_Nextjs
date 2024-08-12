@@ -1,17 +1,15 @@
 "use client";
 import React from 'react';
 import "../../css/mealToggle.css";
-import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedFoods } from '../../redux/slice/foodSlice';
-import { RootState } from '../../redux/store'; // Assuming you have a RootState type defined
+import { useFoodStore } from '@/store/useFoodStore';
 
 const MealToggle: React.FC = () => {
-    const dispatch = useDispatch();
-    const selectedFoods = useSelector((state: RootState) => state.food.selectedFoods);
+    const selectedFoods = useFoodStore((state)=>state.selectedFoods)
+    const setSelectedFoods= useFoodStore((state)=>state.setSelectedFoods);
     const defaultMeals: string[] = ['breakfast', 'lunch', 'dinner'];
 
     const handleMealClick = (meal: string) => {
-        dispatch(setSelectedFoods(meal));
+        setSelectedFoods(meal)
     };
 
     const getMealOrder = (selectedMeal: string): string[] => {

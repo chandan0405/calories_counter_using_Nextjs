@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Modal, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../css/foodQty.css";
-import { useDispatch } from 'react-redux';
-import { addFoodItem, updateFoodItem } from '../../redux/slice/tempMealSlice';
+import { useMealStore } from '@/store/useMealstore';
 
 interface FoodQtyCardProps {
   show: boolean;
@@ -21,7 +20,8 @@ interface FoodQtyCardProps {
 }
 
 const FoodQtyCard: React.FC<FoodQtyCardProps> = ({ show, onClose, initialNutritionalValues, clearSearch, id }) => {
-  const dispatch = useDispatch();
+  const updateFoodItem= useMealStore((state)=>state.updateFoodItem);
+  const addFoodItem=useMealStore((state)=>state.addFoodItem);
   const [quantity, setQuantity] = useState<number>(1);
 
   useEffect(() => {
@@ -46,9 +46,9 @@ const FoodQtyCard: React.FC<FoodQtyCardProps> = ({ show, onClose, initialNutriti
       id: id // Preserve the unique ID
     };
     if (id) {
-      dispatch(updateFoodItem(foodData));
+      updateFoodItem(foodData)
     } else {
-      dispatch(addFoodItem(foodData));
+      addFoodItem(foodData)
     }
     clearSearch();
     onClose();
