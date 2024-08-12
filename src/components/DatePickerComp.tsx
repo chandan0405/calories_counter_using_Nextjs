@@ -7,18 +7,19 @@ import '../css/datepicker.css';
 import { useRouter, usePathname, useParams } from 'next/navigation';
 import { useFoodStore } from '@/store/useFoodStore';
 
-const DatePickerComp = () => {
+const DatePickerComp: React.FC = () => {
   const selectedDate = useFoodStore((state) => state.selectedDate);
-  const setSelectedDate = useFoodStore((state) => state.setSelectedDate)
+  const setSelectedDate = useFoodStore((state) => state.setSelectedDate);
   const [isOpen, setIsOpen] = useState(false);
-  const [month, setMonth] = useState(selectedDate.toLocaleString('default', { month: 'long' }));
+  const [month, setMonth] = useState<string>(selectedDate.toLocaleString('default', { month: 'long' }));
   const router = useRouter();
   const location = usePathname();
 
   const handleDateChange = (date: Date) => {
-    setSelectedDate(date)
+    setSelectedDate(date);
     setMonth(date.toLocaleString('default', { month: 'long' }));
     setIsOpen(false);
+    
     // Update the URL only if we are in the search route
     if (location.startsWith('/search')) {
       const formattedDate = date.toLocaleDateString('en-CA');

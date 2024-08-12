@@ -6,6 +6,8 @@
   padding: 20px;
   border-radius: 10px;
   min-height: 290px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 
@@ -57,11 +59,13 @@
   background-color: #00B09F;
   border-radius: 10px 0 0 10px;
 }
+
 .fill_fat {
   height: 10px;
   background-color: #A347E7;
   border-radius: 10px 0 0 10px;
 }
+
 .fill_carbs {
   height: 10px;
   background-color: #EB6306;
@@ -91,6 +95,6 @@
   margin-bottom: 0;
 }
 
-.calore_precentage_burnt strong{
+.calore_precentage_burnt strong {
   font-size: 36px;
 }

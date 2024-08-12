@@ -3,7 +3,7 @@
     margin: 0 auto;
     overflow: hidden;
     height: 100vh;
-    background-color: #fff;
+    background-color: #fcfdfd;
 }
 
 .search_container {
@@ -35,9 +35,7 @@
 .input_box:focus {
     outline: none;
 }
-.save_btn_container{
-   
-}
+
 
 .save-btn {
     position: absolute;
@@ -48,6 +46,7 @@
     width: 370px;
     bottom: 0;
     margin-bottom: 20px;
+    margin-left: 4px;
 }
 
 .clear-button {
@@ -65,7 +64,6 @@
     display: flex;
     flex-direction: column;
     margin-top: 10px;
-    width: 100%;
 }
 
 .results-list li {

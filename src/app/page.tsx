@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Home() {
   return (
-    <div className={styles["Home-container"]}>
+    <div className={styles["home-container"]}>
       <MainContainerComponent />
     </div>
   );

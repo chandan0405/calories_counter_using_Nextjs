@@ -1,4 +1,6 @@
-.Home-container{
+.home-container{
   margin: 0 auto;
   max-width: 380px;
+  background-color: #F3F4F6;
+  height: 100vh;
 }

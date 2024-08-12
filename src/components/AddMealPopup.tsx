@@ -1,22 +1,26 @@
 "use client";
 import React, { useState } from 'react';
-import {  useSelector } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button, Form } from 'react-bootstrap';
 import "../css/addPopup.css";
 import { useFoodStore } from '@/store/useFoodStore';
 import { useMealStore } from '@/store/useMealstore';
 
+interface AddMealPopupProps{
+    show:boolean,
+    closePopup:()=>void,
+    referFood:()=>void
+}
 
-const AddMealPopup = ({ closePopup, show, referFood }) => {
-    const [mealType, setMealType] = useState('');
+const AddMealPopup: React.FC<AddMealPopupProps> = ({ closePopup, show, referFood }) => {
+    const [mealType, setMealType] = useState<string>('');
     const  selectedDate  = useFoodStore((state)=>state.selectedDate);
     const tempMealItems = useMealStore((state)=>state.mealData);
 
     const handleAddMeal = () => {
         if (mealType.trim().toLowerCase()) {
             const currentDate = selectedDate.toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            let currentMeals = JSON.parse(localStorage.getItem(currentDate)) || {};
+            let currentMeals : {[key: string]:any[]}= JSON.parse(localStorage.getItem(currentDate) || '{}');
 
             if (!currentMeals[mealType.trim().toLowerCase()]) {
                 currentMeals[mealType.trim().toLowerCase()] = [];
@@ -37,7 +41,7 @@ const AddMealPopup = ({ closePopup, show, referFood }) => {
 
     return (
         <div className='modal-body-container'>
-            <Modal show={show} onHide={closePopup} centered className='modal_container'>
+            <Modal show={show} onHide={closePopup}  className='modal_container'>
                 <Modal.Header closeButton>
                     <Modal.Title>Add New Meal Type</Modal.Title>
                 </Modal.Header>

@@ -1,7 +1,7 @@
 .meal_container {
     display: flex;
     border: 1px solid gray;
-    background-color: #d8d8d8c7;
+    background-color: #F3F4F6;
     border-radius: 20px;
     justify-content: space-between;
     align-items: center;

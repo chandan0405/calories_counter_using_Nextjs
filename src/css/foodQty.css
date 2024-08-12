@@ -1,6 +1,13 @@
-.modal_container {
-    position: absolute;
-    max-width: 370px;
-    margin: 0 auto;
+.modal.show {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
 }
 
+.modal-dialog {
+    margin: 0;
+    
+}
+.modal-content{
+    min-width: 360px;
+}

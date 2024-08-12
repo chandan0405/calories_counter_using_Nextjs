@@ -14,24 +14,24 @@ import { useMealStore } from '@/store/useMealstore';
 import { useFoodStore } from '@/store/useFoodStore';
 import { useTempMealStore } from '@/store/useTempMealStore';
 
-const SearchFood = () => {
-  const [showClear, setShowClear] = useState(false);
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState([]);
-  const [isFocussed, setIsFocussed] = useState(true);
-  const [nutrition, setNutrition] = useState(null);
-  const [showQtyCard, setShowQtyCard] = useState(false);
-  const [loading, setLoading] = useState(false);
+const SearchFood: React.FC = () => {
+  const [showClear, setShowClear] = useState<boolean>(false);
+  const [query, setQuery] = useState<string>('');
+  const [results, setResults] = useState<any[]>([]);
+  const [isFocussed, setIsFocussed] = useState<boolean>(true);
+  const [nutrition, setNutrition] = useState<any | null>(null);
+  const [showQtyCard, setShowQtyCard] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const meals = useTempMealStore((state) => state.meals);
   const tempMealItems = useMealStore((state) => state.mealData);
   const selectedFoods = useFoodStore((state) => state.selectedFoods);
-  const selectedDate = useFoodStore((state) => state.selectedDate)
-  const addFoodItem = useMealStore((state) => state.addFoodItem)
+  const selectedDate = useFoodStore((state) => state.selectedDate);
+  const addFoodItem = useMealStore((state) => state.addFoodItem);
   const resetTempMeals = useMealStore((state) => state.resetTempMeals);
   const setSelectedDate = useFoodStore((state) => state.setSelectedDate);
   const pathname = usePathname();
   const date = pathname.split('/').pop();
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     if (date) {
@@ -69,7 +69,7 @@ const SearchFood = () => {
     []
   );
 
-  const fetchNutrition = async (foodName) => {
+  const fetchNutrition = async (foodName: string) => {
     try {
       const response = await axios.post('https://trackapi.nutritionix.com/v2/natural/nutrients', {
         query: foodName,
@@ -93,7 +93,7 @@ const SearchFood = () => {
     fetchResults(query);
   }, [query, fetchResults, meals]);
 
-  const handleSearch = (e) => {
+  const handleSearch = (e:any) => {
     setIsFocussed(false);
     e.preventDefault();
     const value = e.target.value;
@@ -103,7 +103,7 @@ const SearchFood = () => {
 
   const handleSave = () => {
     const currentDate = selectedDate.toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' });
-    let currentMeals = JSON.parse(localStorage.getItem(currentDate)) || {};
+    let currentMeals = JSON.parse(localStorage.getItem(currentDate)|| "{}") ;
 
     const selectedMealType = selectedFoods.toLowerCase();
     if (!currentMeals[selectedMealType]) {
@@ -134,12 +134,12 @@ const SearchFood = () => {
     ))
   ), [results]);
 
-  const saveToTempMeal = (foodData) => {
+  const saveToTempMeal = (foodData:any) => {
     addFoodItem(foodData)
     setShowQtyCard(false);
   };
 
-  const handleEdit = (id) => {
+  const handleEdit = (id:string) => {
     const item = tempMealItems.find(item => item.id === id);
     if (item) {
       setNutrition({
