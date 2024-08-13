@@ -20,7 +20,6 @@ const DatePickerComp: React.FC = () => {
     setMonth(date.toLocaleString('default', { month: 'long' }));
     setIsOpen(false);
     
-    // Update the URL only if we are in the search route
     if (location.startsWith('/search')) {
       const formattedDate = date.toLocaleDateString('en-CA');
       router.push(`/search/${formattedDate}`);

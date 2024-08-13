@@ -13,7 +13,6 @@ const Footer: React.FC<FooterProps> = ({ handleShowPopup }) => {
   const router = useRouter();
   const location = usePathname();
   
-
   const isActiveRoute = (path: string) => location === path;
 
   const handleNavigation = (path: string) => {

@@ -8,7 +8,7 @@ export interface FoodDataItem {
   weight: number;
   protein: number;
   carbs: number;
-  fat: number;
+  fat?: number;
   image?: string;
   quantity: number;
 }

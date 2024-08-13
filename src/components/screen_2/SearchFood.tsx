@@ -21,8 +21,8 @@ interface FoodItem extends FoodDataItem {
   weight: number;
   protein: number;
   carbs: number;
-  fat: number;
-  image?: string; 
+  fat?: number;
+  image?: string;
   quantity: number;
 }
 
@@ -35,7 +35,7 @@ const SearchFood: React.FC = () => {
   const [showQtyCard, setShowQtyCard] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const meals = useTempMealStore((state) => state.meals);
-  const tempMealItems : FoodItem[]= useMealStore((state) => state.mealData);
+  const tempMealItems: FoodItem[] = useMealStore((state) => state.mealData);
   const selectedFoods = useFoodStore((state) => state.selectedFoods);
   const selectedDate = useFoodStore((state) => state.selectedDate);
   const addFoodItem = useMealStore((state) => state.addFoodItem);
@@ -105,7 +105,7 @@ const SearchFood: React.FC = () => {
     fetchResults(query);
   }, [query, fetchResults, meals]);
 
-  const handleSearch = (e:any) => {
+  const handleSearch = (e: any) => {
     setIsFocussed(false);
     e.preventDefault();
     const value = e.target.value;
@@ -115,7 +115,7 @@ const SearchFood: React.FC = () => {
 
   const handleSave = () => {
     const currentDate = selectedDate.toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' });
-    let currentMeals = JSON.parse(localStorage.getItem(currentDate)|| "{}") ;
+    let currentMeals = JSON.parse(localStorage.getItem(currentDate) || "{}");
 
     const selectedMealType = selectedFoods.toLowerCase();
     if (!currentMeals[selectedMealType]) {
@@ -146,12 +146,12 @@ const SearchFood: React.FC = () => {
     ))
   ), [results]);
 
-  const saveToTempMeal = (foodData:any) => {
+  const saveToTempMeal = (foodData: any) => {
     addFoodItem(foodData)
     setShowQtyCard(false);
   };
 
-  const handleEdit = (id:string) => {
+  const handleEdit = (id: string) => {
     const item = tempMealItems.find(item => item.id === id);
     if (item) {
       setNutrition({
@@ -189,10 +189,10 @@ const SearchFood: React.FC = () => {
             image={item.image}
             name={item.name}
             calories={item.calories}
-            weight={item.weight}
-            protein={item.protein}
-            carbs={item.carbs}
-            fat={item.fat}
+            weight={item.weight ?? 0} 
+            protein={item.protein ?? 0}
+            carbs={item.carbs ?? 0}  
+            fat={item.fat ?? 0} 
             id={item.id}
             quantity={item.quantity}
             onEdit={handleEdit}

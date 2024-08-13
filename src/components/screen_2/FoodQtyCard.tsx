@@ -25,7 +25,7 @@ interface FoodQtyCardProps {
 }
 
 const FoodQtyCard: React.FC<FoodQtyCardProps> = ({ show, onClose, initialNutritionalValues, clearSearch, id }) => {
-  console.log(initialNutritionalValues)
+  
   const updateFoodItem= useMealStore((state)=>state.updateFoodItem);
   const addFoodItem=useMealStore((state)=>state.addFoodItem);
   const [quantity, setQuantity] = useState<number>(1);
@@ -50,7 +50,7 @@ const FoodQtyCard: React.FC<FoodQtyCardProps> = ({ show, onClose, initialNutriti
       protein: initialNutritionalValues.protein * quantity,
       carbs: initialNutritionalValues.carbs * quantity,
       weight: initialNutritionalValues.weight * quantity,
-      id: id || ''
+      id: id || '',
     };
     if (id) {
       updateFoodItem(foodData)
