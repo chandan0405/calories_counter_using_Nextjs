@@ -14,12 +14,14 @@ interface FoodQtyCardProps {
     carbs: number;
     weight: number;
     quantity?: number;
+    name: string;
   };
   clearSearch: () => void;
-  id?: string; // Optional in case it's not provided
+  id?: string;
 }
 
 const FoodQtyCard: React.FC<FoodQtyCardProps> = ({ show, onClose, initialNutritionalValues, clearSearch, id }) => {
+  console.log(initialNutritionalValues)
   const updateFoodItem= useMealStore((state)=>state.updateFoodItem);
   const addFoodItem=useMealStore((state)=>state.addFoodItem);
   const [quantity, setQuantity] = useState<number>(1);
@@ -39,11 +41,12 @@ const FoodQtyCard: React.FC<FoodQtyCardProps> = ({ show, onClose, initialNutriti
     const foodData = {
       ...initialNutritionalValues,
       quantity: quantity,
+      name: initialNutritionalValues.name,
       calories: initialNutritionalValues.calories * quantity,
       protein: initialNutritionalValues.protein * quantity,
       carbs: initialNutritionalValues.carbs * quantity,
       weight: initialNutritionalValues.weight * quantity,
-      id: id // Preserve the unique ID
+      id: id || ''
     };
     if (id) {
       updateFoodItem(foodData)
