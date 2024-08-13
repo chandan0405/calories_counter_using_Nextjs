@@ -15,7 +15,11 @@ interface FoodQtyCardProps {
     weight: number;
     quantity?: number;
     name: string;
+    fat?:number;
+    image?:string;
+    id?:string;
   };
+  onSave?:any;
   clearSearch: () => void;
   id?: string;
 }
