@@ -1,22 +1,28 @@
 import { create } from "zustand";
 import { nanoid } from 'nanoid';
 
-interface FoodItem {
+export interface FoodDataItem {
   id: string;
   name: string;
   calories: number;
+  weight: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+  image?: string;
+  quantity: number;
 }
 
 interface mealItem {
-  mealData: FoodItem[];
-  addFoodItem: (food: Omit<FoodItem, 'id'>) => void;
-  updateFoodItem: (food: FoodItem) => void;
+  mealData: FoodDataItem[];
+  addFoodItem: (food: Omit<FoodDataItem, 'id'>) => void;
+  updateFoodItem: (food: FoodDataItem) => void;
   removeFoodItem: (id: string) => void;
   resetTempMeals: () => void;
 }
 
 export const useMealStore = create<mealItem>((set) => ({
-  mealData: [],
+  mealData: [] as FoodDataItem[],
   addFoodItem: (food) =>
     set((state) => ({
       mealData: [

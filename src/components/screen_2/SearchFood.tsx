@@ -10,9 +10,21 @@ import { debounce } from 'lodash';
 import FoodCard from './FoodCard';
 import FoodQtyCard from './FoodQtyCard';
 import { useRouter } from 'next/navigation'
-import { useMealStore } from '@/store/useMealstore';
+import { FoodDataItem, useMealStore } from '@/store/useMealstore';
 import { useFoodStore } from '@/store/useFoodStore';
 import { useTempMealStore } from '@/store/useTempMealStore';
+
+interface FoodItem extends FoodDataItem {
+  id: string;
+  name: string;
+  calories: number;
+  weight: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+  image?: string; 
+  quantity: number;
+}
 
 const SearchFood: React.FC = () => {
   const [showClear, setShowClear] = useState<boolean>(false);
@@ -23,7 +35,7 @@ const SearchFood: React.FC = () => {
   const [showQtyCard, setShowQtyCard] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const meals = useTempMealStore((state) => state.meals);
-  const tempMealItems = useMealStore((state) => state.mealData);
+  const tempMealItems : FoodItem[]= useMealStore((state) => state.mealData);
   const selectedFoods = useFoodStore((state) => state.selectedFoods);
   const selectedDate = useFoodStore((state) => state.selectedDate);
   const addFoodItem = useMealStore((state) => state.addFoodItem);
@@ -36,7 +48,7 @@ const SearchFood: React.FC = () => {
   useEffect(() => {
     if (date) {
       const parsedDate = new Date(date);
-      if (!isNaN(parsedDate)) {
+      if (!isNaN(parsedDate.getTime())) {
         setSelectedDate(parsedDate)
       } else {
         console.error('Invalid date format');

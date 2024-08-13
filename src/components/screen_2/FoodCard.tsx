@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useMealStore } from '@/store/useMealstore';
 
 interface FoodCardProps {
-  image: string;
+  image?: string;
   name: string;
   calories: number;
   weight: number;
