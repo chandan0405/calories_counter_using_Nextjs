@@ -15,19 +15,19 @@ interface FoodQtyCardProps {
     weight: number;
     quantity?: number;
     name: string;
-    fat?:number;
-    image?:string;
-    id?:string;
+    fat?: number;
+    image?: string;
+    id?: string;
   };
-  onSave?:any;
+  onSave?: any;
   clearSearch: () => void;
   id?: string;
 }
 
 const FoodQtyCard: React.FC<FoodQtyCardProps> = ({ show, onClose, initialNutritionalValues, clearSearch, id }) => {
-  
-  const updateFoodItem= useMealStore((state)=>state.updateFoodItem);
-  const addFoodItem=useMealStore((state)=>state.addFoodItem);
+
+  const updateFoodItem = useMealStore((state) => state.updateFoodItem);
+  const addFoodItem = useMealStore((state) => state.addFoodItem);
   const [quantity, setQuantity] = useState<number>(1);
 
   useEffect(() => {
@@ -47,11 +47,13 @@ const FoodQtyCard: React.FC<FoodQtyCardProps> = ({ show, onClose, initialNutriti
       quantity: quantity,
       name: initialNutritionalValues.name,
       calories: initialNutritionalValues.calories * quantity,
-      protein: initialNutritionalValues.protein * quantity,
-      carbs: initialNutritionalValues.carbs * quantity,
-      weight: initialNutritionalValues.weight * quantity,
+      protein: (initialNutritionalValues.protein ?? 0) * quantity,
+      carbs: (initialNutritionalValues.carbs ?? 0) * quantity,
+      fat: (initialNutritionalValues.fat ?? 0) * quantity,
+      weight: (initialNutritionalValues.weight ?? 0) * quantity,
       id: id || '',
     };
+    
     if (id) {
       updateFoodItem(foodData)
     } else {
@@ -59,7 +61,7 @@ const FoodQtyCard: React.FC<FoodQtyCardProps> = ({ show, onClose, initialNutriti
     }
     clearSearch();
     onClose();
-  }; 
+  };
 
   return (
     <Modal show={show} onHide={onClose} className="modal_container">

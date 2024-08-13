@@ -205,23 +205,23 @@ const SearchFood: React.FC = () => {
       <div className='foodqty_modal_container'>
         {nutrition && (
           <FoodQtyCard
-            show={showQtyCard}
-            onClose={() => setShowQtyCard(false)}
-            initialNutritionalValues={{
-              calories: Math.floor(nutrition.nf_calories || nutrition.calories),
-              protein: Math.floor(nutrition.nf_protein || nutrition.protein),
-              carbs: Math.floor(nutrition.nf_total_carbohydrate || nutrition.carbs),
-              fat: Math.floor(nutrition.nf_total_fat || nutrition.fat),
-              weight: Math.floor(nutrition.serving_weight_grams || nutrition.weight),
-              image: (nutrition.photo?.thumb || nutrition.image),
-              name: (nutrition.food_name || nutrition.name),
-              quantity: (nutrition.quantity),
-              id: (nutrition.id)
-            }}
-            onSave={saveToTempMeal}
-            clearSearch={clearSearch}
-            id={nutrition.id}
-          />
+          show={showQtyCard}
+          onClose={() => setShowQtyCard(false)}
+          initialNutritionalValues={{
+            calories: Math.floor(nutrition.nf_calories || nutrition.calories),
+            protein: Math.floor(nutrition.nf_protein || (nutrition.protein ?? 0)), 
+            carbs: Math.floor(nutrition.nf_total_carbohydrate ||( nutrition.carbs ?? 0)), 
+            fat: Math.floor(nutrition.nf_total_fat || (nutrition.fat ?? 0)), 
+            weight: Math.floor(nutrition.serving_weight_grams || (nutrition.weight ?? 0)), 
+            image: (nutrition.photo?.thumb || nutrition.image),
+            name: (nutrition.food_name || nutrition.name),
+            quantity: (nutrition.quantity ?? 1), // Default to 1
+            id: (nutrition.id)
+          }}
+          onSave={saveToTempMeal}
+          clearSearch={clearSearch}
+          id={nutrition.id}
+        />
         )}
       </div>
     </div>
