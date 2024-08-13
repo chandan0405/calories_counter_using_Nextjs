@@ -66,7 +66,7 @@ const MainContainerComponent: React.FC = () => {
       <HomeContainer meals={meals} />
       <Footer handleShowPopup={handleShowPopup} />
       {showAddMealPopup && (
-        <AddMealPopup show={handleShowPopup} closePopup={closePopup} referFood={referFood} />
+        <AddMealPopup show={showAddMealPopup} closePopup={closePopup} referFood={referFood} />
       )}
     </div>
   );
